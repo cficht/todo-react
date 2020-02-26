@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+
+#main-div {
+  border: 1px solid black;
+  text-align: center;
+  margin: 0 auto;
+}
+
+#add-div {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+}
+
+#list-div {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;  
+  text-align: left;
+}

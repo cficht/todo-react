@@ -8,7 +8,7 @@ export default class List extends Component {
     render() {
         const ListItem = this.props.todos.map(todo => <Item todo={todo}></Item>)
         return (
-            <div>
+            <div id="list-div">
                 <ul>
                     {ListItem}
                 </ul>
