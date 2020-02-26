@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Add from './Add.js';
 import List from './List.js';
-import { getTodos, addTodo, updateTodo } from './todo-api.js';
+import { getTodos, addTodo, updateTodo, deleteTodo } from './todo-api.js';
 
 export default class TodoApp extends Component {
 
@@ -41,11 +41,17 @@ export default class TodoApp extends Component {
         this.setState({ todos: todos.body })
     }
 
+    handleDelete = async (todoId) => {
+        await deleteTodo(todoId);
+        const todos = await getTodos();
+        this.setState({ todos: todos.body })
+    }
+
     render() {
         return (
             <div>
                 <Add handleAddInput={this.handleAddInput} handleAddSubmit={this.handleAddSubmit} addTodo={this.state.addTodo}/>
-                <List todos={this.state.todos} handleUpdate={this.handleUpdate} />
+                <List todos={this.state.todos} handleUpdate={this.handleUpdate} handleDelete={this.handleDelete}/>
             </div>
         )
     }
