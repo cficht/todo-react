@@ -38,7 +38,6 @@
 }
 
 #main-div {
-  border: 1px solid black;
   text-align: center;
   margin: 0 auto;
 }
@@ -49,18 +48,26 @@
   justify-content: center;
   width: 50%;
   margin: 0 auto;
+  padding: 10px;
 }
 
 #list-div {
   border: 1px solid black;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   width: 50%;
   margin: 0 auto;  
-  text-align: left;
+  text-align: center;
+  padding: 10px;
+}
+
+#list-div ul {
+  padding-inline-start: 0px;
+  width: 100%;
 }
 
 #list-div li {
   display: flex;
   justify-content: space-between;
+  padding: 20px;
 }

@@ -4,7 +4,6 @@ import List from './List.js';
 import { getTodos, addTodo, updateTodo, deleteTodo } from './todo-api.js';
 
 export default class TodoApp extends Component {
-
     state = { 
         todos: [],
         addTodo: ''
