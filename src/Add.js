@@ -4,7 +4,7 @@ export default class Add extends Component {
     render() {
         return (
             <div>
-                
+                ADD              
             </div>
         )
     }

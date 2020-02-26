@@ -5,16 +5,19 @@ import {
   Link,
   BrowserRouter as Router, 
 } from 'react-router-dom';
-import Add from './Add.js';
-import List from './List.js';
+import TodoApp from './TodoApp.js';
 
 export default class App extends Component {
   render() {
     return (
-      <div>
-        APP
-        
-      </div>
+      <Router>
+        <div>
+          <h1>TODO LIST</h1>
+          <Switch>
+            <Route exact path="/" component={TodoApp} />
+          </Switch>
+        </div>
+      </Router>
     )
   }
 }
