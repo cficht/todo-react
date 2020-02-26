@@ -5,6 +5,9 @@ export async function getTodos() {
 }
 
 export async function addTodo(todo) {
-    console.log(todo);
     return request.post(`http://fathomless-stream-03122.herokuapp.com/api/todos`, todo);
+}
+
+export async function updateTodo(todoId, todo) {
+    return request.put(`http://fathomless-stream-03122.herokuapp.com/api/todos/${todoId}`, todo);
 }

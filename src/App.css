@@ -59,3 +59,8 @@
   margin: 0 auto;  
   text-align: left;
 }
+
+#list-div li {
+  display: flex;
+  justify-content: space-between;
+}
