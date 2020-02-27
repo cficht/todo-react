@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { 
+  BrowserRouter,
   Route, 
-  Switch,
-  Link,
+  Redirect,
   BrowserRouter as Router, 
 } from 'react-router-dom';
 import TodoApp from './TodoApp.js';
 import Login from './Login.js';
 import './App.css';
+
+const isLoggedIn = () => JSON.parse(localStorage.getItem('user'));
 
 export default class App extends Component {
   render() {
@@ -15,10 +17,14 @@ export default class App extends Component {
       <Router>
         <div id="main-div">
           <h1>TODO LIST</h1>
-          <Switch>
+          <BrowserRouter>
+          <Route exact path='/' render={() => 
+                isLoggedIn() 
+                    ? <TodoApp />
+                    : <Redirect to='/login' />
+                }/>
             <Route exact path="/login" component={Login} />
-            <Route exact path="/" component={TodoApp} />
-          </Switch>
+          </BrowserRouter>
         </div>
       </Router>
     )

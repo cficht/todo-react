@@ -7,10 +7,14 @@ export default class TodoApp extends Component {
     state = { 
         todos: [],
         addTodo: '',
+        userName: ''
     }
 
     async componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
+        const userName = user.email.split('@')[0];
+        this.setState({ userName: userName });
+
         const todos = await getTodos(user.token);
         this.setState({ todos: todos.body })
     }
@@ -40,19 +44,28 @@ export default class TodoApp extends Component {
         }
         await updateTodo(todoId, todoToUpdate, user.token);
         const todos = await getTodos(user.token);
-        this.setState({ todos: todos.body })
+        this.setState({ todos: todos.body });
     }
 
     handleDelete = async (todoId) => {
         const user = JSON.parse(localStorage.getItem('user'));
         await deleteTodo(todoId, user.token);
         const todos = await getTodos(user.token);
-        this.setState({ todos: todos.body })
+        this.setState({ todos: todos.body });
+    }
+
+    handleLogout = () => {
+        localStorage.clear();
+        window.location = ('/');
     }
 
     render() {
         return (
             <div>
+                <div id="user-info">
+                    <h2><span id="user-name">{this.state.userName}</span>'s List</h2>
+                    <button onClick={this.handleLogout}>Logout</button>
+                </div>
                 <Add handleAddInput={this.handleAddInput} handleAddSubmit={this.handleAddSubmit} addTodo={this.state.addTodo}/>
                 <List todos={this.state.todos} handleUpdate={this.handleUpdate} handleDelete={this.handleDelete}/>
             </div>

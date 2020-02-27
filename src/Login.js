@@ -32,16 +32,21 @@ export default class Login extends Component {
         }
         const signIn = await onSignin(user);
         localStorage.setItem('user', JSON.stringify(signIn.body));
+        this.props.history.push('/');
     }
 
     handleSignUp = async () => {
-        console.log(this.state.usernameSignUp)
+        if(!this.state.usernameSignUp || !this.state.passwordSignUp) {
+            alert('Please enter a valid Username and Password');
+            return;
+        }
         const user = {
             email: this.state.usernameSignUp,
             password: this.state.passwordSignUp
         }
         const signUp = await onSignup(user);
         localStorage.setItem('user', JSON.stringify(signUp.body));
+        this.props.history.push('/');
     }
 
     render() {
@@ -50,13 +55,13 @@ export default class Login extends Component {
                 <div className="login-div">
                     <h2>Sign-in</h2>
                     <label>Name: <input onChange={e => this.handleUsernameSignIn(e)} value={this.state.usernameSignIn}></input></label>
-                    <label>Password: <input onChange={e => this.handlePasswordSignIn(e)} value={this.state.passwordSignIn}></input></label>
+                    <label>Password: <input type="password" onChange={e => this.handlePasswordSignIn(e)} value={this.state.passwordSignIn}></input></label>
                     <button onClick={this.handleSignIn}>Submit</button>
                 </div>
                 <div className="login-div">
                     <h2>Sign-up</h2>
                     <label>Name: <input onChange={e => this.handleUsernameSignUp(e)} value={this.state.usernameSignUp}></input></label>
-                    <label>Password: <input onChange={e => this.handlePasswordSignUp(e)} value={this.state.passwordSignUp}></input></label>
+                    <label>Password: <input type="password" onChange={e => this.handlePasswordSignUp(e)} value={this.state.passwordSignUp}></input></label>
                     <button onClick={this.handleSignUp}>Submit</button>
                 </div>
             </div>
