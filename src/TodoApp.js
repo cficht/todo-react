@@ -7,13 +7,15 @@ export default class TodoApp extends Component {
     state = { 
         todos: [],
         addTodo: '',
-        userName: ''
+        userName: '',
+        user: {}
     }
 
     async componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
         const userName = user.email.split('@')[0];
         this.setState({ userName: userName });
+        this.setState({ user: user });
 
         const todos = await getTodos(user.token);
         this.setState({ todos: todos.body })
@@ -29,29 +31,43 @@ export default class TodoApp extends Component {
         const newTodo = {
             "task": this.state.addTodo
         }
+        const fakeNewTodo = {           
+            "id": Math.random(),
+            "task": this.state.addTodo,
+            "user_id": this.state.user.id,
+            "complete": false
+        }
         await addTodo(newTodo, user.token);
-        const todos = await getTodos(user.token);
-        this.setState({ todos: todos.body })
+        this.setState({ todos: [...this.state.todos, fakeNewTodo] })
     }
 
     handleUpdate = async (todoId) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        let todoComplete;
+        const newTodos = this.state.todos.slice();
         const indexOfTodo = this.state.todos.findIndex(todo => todo.id === todoId);
+
+        let todoComplete;
         this.state.todos[indexOfTodo].complete === true ? todoComplete = false : todoComplete = true; 
         const todoToUpdate = {
             "complete": todoComplete
         }
-        await updateTodo(todoId, todoToUpdate, user.token);
-        const todos = await getTodos(user.token);
-        this.setState({ todos: todos.body });
+        if (todoId % 1 === 0) {
+            await updateTodo(todoId, todoToUpdate, user.token);
+        }
+        newTodos[indexOfTodo].complete = todoComplete;
+        this.setState({ todos: newTodos });
     }
 
     handleDelete = async (todoId) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        await deleteTodo(todoId, user.token);
-        const todos = await getTodos(user.token);
-        this.setState({ todos: todos.body });
+        const newTodos = this.state.todos.slice();
+        const indexOfTodo = this.state.todos.findIndex(todo => todo.id === todoId);
+
+        if (todoId % 1 === 0) {
+            await deleteTodo(todoId, user.token);
+        }
+        newTodos.splice(indexOfTodo, 1);
+        this.setState({ todos: newTodos });
     }
 
     handleLogout = () => {
@@ -61,7 +77,7 @@ export default class TodoApp extends Component {
 
     render() {
         return (
-            <div>
+            <div id="main-div">
                 <div id="user-info">
                     <h2><span id="user-name">{this.state.userName}</span>'s List</h2>
                     <button onClick={this.handleLogout}>Logout</button>
