@@ -6,11 +6,12 @@ import { getTodos, addTodo, updateTodo, deleteTodo } from './todo-api.js';
 export default class TodoApp extends Component {
     state = { 
         todos: [],
-        addTodo: ''
+        addTodo: '',
     }
 
     async componentDidMount() {
-        const todos = await getTodos();
+        const user = JSON.parse(localStorage.getItem('user'));
+        const todos = await getTodos(user.token);
         this.setState({ todos: todos.body })
     }
 
@@ -20,29 +21,32 @@ export default class TodoApp extends Component {
 
     handleAddSubmit = async (e) => {
         e.preventDefault();
+        const user = JSON.parse(localStorage.getItem('user'));
         const newTodo = {
             "task": this.state.addTodo
         }
-        await addTodo(newTodo);
-        const todos = await getTodos();
+        await addTodo(newTodo, user.token);
+        const todos = await getTodos(user.token);
         this.setState({ todos: todos.body })
     }
 
     handleUpdate = async (todoId) => {
+        const user = JSON.parse(localStorage.getItem('user'));
         let todoComplete;
         const indexOfTodo = this.state.todos.findIndex(todo => todo.id === todoId);
         this.state.todos[indexOfTodo].complete === true ? todoComplete = false : todoComplete = true; 
         const todoToUpdate = {
             "complete": todoComplete
         }
-        await updateTodo(todoId, todoToUpdate);
-        const todos = await getTodos();
+        await updateTodo(todoId, todoToUpdate, user.token);
+        const todos = await getTodos(user.token);
         this.setState({ todos: todos.body })
     }
 
     handleDelete = async (todoId) => {
-        await deleteTodo(todoId);
-        const todos = await getTodos();
+        const user = JSON.parse(localStorage.getItem('user'));
+        await deleteTodo(todoId, user.token);
+        const todos = await getTodos(user.token);
         this.setState({ todos: todos.body })
     }
 

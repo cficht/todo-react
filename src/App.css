@@ -71,3 +71,14 @@
   justify-content: space-between;
   padding: 20px;
 }
+
+.login-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-div button {
+  width: 100px;
+}

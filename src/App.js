@@ -6,6 +6,7 @@ import {
   BrowserRouter as Router, 
 } from 'react-router-dom';
 import TodoApp from './TodoApp.js';
+import Login from './Login.js';
 import './App.css';
 
 export default class App extends Component {
@@ -15,6 +16,7 @@ export default class App extends Component {
         <div id="main-div">
           <h1>TODO LIST</h1>
           <Switch>
+            <Route exact path="/login" component={Login} />
             <Route exact path="/" component={TodoApp} />
           </Switch>
         </div>
